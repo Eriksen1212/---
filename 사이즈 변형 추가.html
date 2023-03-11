@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Colorful Circles</title>
+    <style>
+      canvas {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <label for="color-input">Circle color: </label>
+    <input type="text" id="color-input" value="black">
+    <button id="color-button">Change Color</button>
+
+    <div>
+      <label for="size-input">Circle size: </label>
+      <input type="number" id="size-input" value="10" min="1" max="50">
+      <button id="size-button">Change Size</button>
+    </div>
+
+    <canvas id="canvas" width="1500" height="700"></canvas>
+    <button id="clearButton">Clear</button>
+
+    <script>
+      const canvas = document.getElementById('canvas');
+      const context = canvas.getContext('2d');
+      let color = 'black';
+      let radius = 10;
+
+      const colorInput = document.getElementById('color-input');
+      const colorButton = document.getElementById('color-button');
+
+      colorButton.addEventListener('click', () => {
+        color = colorInput.value;
+      });
+
+      const sizeInput = document.getElementById('size-input');
+      const sizeButton = document.getElementById('size-button');
+
+      sizeButton.addEventListener('click', () => {
+        radius = parseInt(sizeInput.value);
+      });
+
+      canvas.addEventListener('mousemove', (event) => {
+        if (event.buttons !== 1) {
+          return;
+        }
+        const x = event.offsetX;
+        const y = event.offsetY;
+
+        context.beginPath();
+        context.arc(x, y, radius, 0, 2 * Math.PI);
+        context.fillStyle = color;
+        context.fill();
+      });
+      const clearButton = document.getElementById('clearButton');
+      clearButton.addEventListener('click', () => {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+      });
+    </script>
+  </body>
+</html>
